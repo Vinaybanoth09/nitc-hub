@@ -2,6 +2,35 @@ import { useState, useEffect } from 'react';
 import { supabase } from './supabaseClient';
 import { formatDistanceToNow } from 'date-fns'; 
 
+
+// Add a state to show/hide profile
+const [showProfile, setShowProfile] = useState(false);
+
+// Update your Header JSX
+<div style={styles.header}>
+  <h2 style={{ margin: 0, color: '#007bff' }}>NITC Hub</h2>
+  <div style={{ display: 'flex', gap: '10px' }}>
+    <button onClick={() => setShowProfile(!showProfile)} style={styles.secondaryBtn}>
+      👤 Profile
+    </button>
+    <button onClick={handleSignOut} style={styles.logoutBtn}>
+      Sign Out
+    </button>
+  </div>
+</div>
+
+{/* Profile View (Only shows if showProfile is true) */}
+{showProfile && (
+  <div style={styles.profileCard}>
+    <h3>Your Profile</h3>
+    <p><strong>Email:</strong> {userEmail}</p>
+    <p><strong>Listings Posted:</strong> {items.filter(i => i.seller_email === userEmail).length}</p>
+    <button onClick={() => setViewMode('my_posts')} style={styles.button}>
+      View My Listings
+    </button>
+  </div>
+)}
+
 export default function Listings() {
   const [items, setItems] = useState([]);
   const [search, setSearch] = useState('');

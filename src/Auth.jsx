@@ -27,6 +27,15 @@ export default function Auth() {
     setLoading(false);
   };
 
+  const handleResetPassword = async () => {
+  if (!email) return alert("Please enter your email first.");
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + '/reset-password',
+  });
+  if (error) alert(error.message);
+  else alert("Password reset link sent to your NITC email!");
+};
+
   return (
     <div style={styles.container}>
       <div style={styles.card}>
@@ -38,7 +47,7 @@ export default function Auth() {
         <form onSubmit={handleAuth} style={styles.form}>
           <input
             type="email"
-            placeholder="NITC Email (e.g. b23...)"
+            placeholder="NITC Email (e.g. b23...@nitc.ac.in)"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             style={styles.input}
@@ -56,6 +65,10 @@ export default function Auth() {
             {loading ? 'Processing...' : (isSignUp ? 'Sign Up' : 'Login')}
           </button>
         </form>
+        
+        <span onClick={handleResetPassword} style={{ ...styles.link, fontSize: '12px', display: 'block', marginTop: '10px' }}>
+  Forgot Password?
+</span>
 
         <p style={styles.toggleText}>
           {isSignUp ? 'Already have an account?' : "Don't have an account?"}{' '}
