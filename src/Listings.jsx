@@ -92,8 +92,29 @@ export default function Listings() {
     item.title?.toLowerCase().includes(search.toLowerCase())
   );
 
+
+  const handleSignOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) alert(error.message);
+};
+
   return (
-    <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto', fontFamily: 'sans-serif' }}>
+     <div style={{ padding: '20px', maxWidth: '800px', margin: 'auto', fontFamily: 'sans-serif' }}>
+  
+  {/* Logout Header */}
+  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+    <h2 style={{ margin: 0, color: '#007bff' }}>NITC Hub</h2>
+    <button 
+      onClick={handleSignOut} 
+      style={{ padding: '8px 15px', background: 'white', border: '1px solid #ddd', borderRadius: '5px', cursor: 'pointer' }}
+    >
+      Sign Out
+    </button>
+  </div>
+
+ 
+
+      
       
       {/* 1. Header & Post Form */}
       <div style={{ background: '#f9f9f9', padding: '20px', borderRadius: '10px', marginBottom: '30px' }}>
